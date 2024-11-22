@@ -1,15 +1,15 @@
 package main
 
-import "fmt"
-
 func main() {
 	todos := Todos{}
 
-	todos.add("Buy milk")
-	todos.add("Buy bread")
+	storage := NewStorage[Todos]("dk-todos.json")
+	storage.Load(&todos)
 
-	fmt.Printf("%v\n\n", todos)
+	cmdFlags := NewCmdFlags()
+	cmdFlags.Execute(&todos)
 
-	todos.delete(0)
-	fmt.Printf("%v", todos)
+	// todos.print()
+
+	storage.Save(todos)
 }
